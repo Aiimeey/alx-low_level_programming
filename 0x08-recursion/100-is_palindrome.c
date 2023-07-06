@@ -6,7 +6,8 @@
  */
 int is_palindrome(char *s)
 {
-	If (*s =='\0')
-		Return (1);
-	Return (0);	
+	if (*s == 0)
+		return (1);
+
+	return (0);
 }
