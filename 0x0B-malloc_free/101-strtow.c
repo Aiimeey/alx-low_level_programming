@@ -11,6 +11,7 @@ char **strtow(char *str)
 {
 	int i = 0,  l, m,  wc = 0, j = 0, cc = 0;
 	char **pw;
+
 	while (*str == '\0' || str == NULL)
 		return (NULL);
 	for (i = 0; str[i]; i++)
