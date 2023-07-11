@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdlib.h>
 #include <string.h>
+
 /**
  * alloc_grid - Allocates a 2D grid of integers
  * @width: The width of the grid
@@ -27,12 +28,19 @@ int **alloc_grid(int width, int height)
 		p[i] = malloc(width * sizeof(int));
 		if (p[i] == NULL)
 		{
+
+			for (j = 0; j < i; j++)
+			{
+				free(p[j]);
+			}
+			free(p);
 			return (NULL);
 		}
 
 		for (j = 0; j < width; j++)
 			p[i][j] = 0;
-
 	}
+
 	return (p);
 }
+
