@@ -1,11 +1,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-/** argstostr - Concatenates an array of strings into a single string
- *  @ac: The number of arguments
- *  @av: An array of strings
+/**
+ * argstostr - Concatenates an array of strings into a single string
+ * @ac: The number of arguments
+ * @av: An array of strings
  *
- *  Return: A pointer to the concatenated string, or NULL if an error occurred
+ * Return: A pointer to the concatenated string, or NULL if an error occurred
  */
 char *argstostr(int ac, char **av)
 {
