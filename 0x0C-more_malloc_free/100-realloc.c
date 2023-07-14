@@ -1,3 +1,4 @@
+#include "main.h"
 #include <stdlib.h>
 #include <string.h>
 /**
@@ -10,10 +11,8 @@
  */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	void *new_ptr , *new_ptr ;
-
-
-
+	unsigned int i ;
+	char *new_ptr, *old_ptr;
 
 	if (new_size == 0 && ptr != NULL)
 	{
@@ -32,18 +31,18 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	if (new_ptr == NULL)
 		return NULL;
 
-	ptr_old = ptr;    
+	old_ptr = ptr;  
 
 	if (new_size < old_size)
 	{
 		for (i = 0 ; i < new_size ; i++)
-			ptr_new[i] = ptr_old[i];
+			new_ptr[i] = old_ptr[i];
 	}
 
 	if (new_size > old_size)
 	{
 		for (i = 0 ; i < old_size ; i++)
-			ptr_new[i] = ptr_old[i];
+			new_ptr[i] = old_ptr[i];
 	}
 
 
