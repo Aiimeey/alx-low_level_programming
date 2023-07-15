@@ -10,7 +10,7 @@
  */
 
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	int  num1, num2, mul;
 
@@ -27,12 +27,12 @@ int main(int argc, char* argv[])
 	if (*argv[2] < 48 && *argv[2] > 57)
 	{		printf("Error\n");
 		exit(98);
-	}	
+	}
 
 	num1 = atoi(argv[1]);
 	num2 = atoi(argv[2]);
 	mul = num1 * num2;
 
-	printf("%d",mul);
+	printf("%d", mul);
 	return (0);
 }
