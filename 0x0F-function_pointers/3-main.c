@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 /**
- * main - Entry point of the program.
- * @argc: The number of command-line arguments passed to the program.
- * @argv: An array of strings containing the command-line arguments.
+ * main - Entry point of the program
+ * @argc: The number of command-line arguments passed to the program
+ * @argv: An array of strings containing the command-line arguments
  * Return:
- * 0 on successful execution.
- * 98 if the number of command-line arguments is not 4 (including the program name).
- * 99 if the operator provided is not one of the supported arithmetic operators.
+ * 0 on successful execution
+ * 98 if the number of arguments is not 4 (including the program name)
+ * 99 if the operator is not one of the supported arithmetic operators
  * 100 if division or modulo by zero is attempted.
  */
 int main(int argc, char *argv[])
