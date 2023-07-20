@@ -1,6 +1,7 @@
 #include "variadic_functions.h"
 #include <stdio.h>
 #include <stdarg.h>
+#include <string.h>
 /**
  * print_all - print a number of values based on a given format
  * @format: the format indicating the data types to print
@@ -32,8 +33,14 @@ void print_all(const char * const format, ...)
 				printf("%s%f", p, va_arg(arg, double));
 				break;
 			case 's':
-				printf("%s%s", p, va_arg(arg, char *));
-				break;
+				{
+					char *str = va_arg(arg, char *);
+					if (str == NULL || strcmp(str, "NULL") == 0)
+						printf("%s(nil)", p);
+					else
+						printf("%s%s", p, str);
+					break;
+				}
 			default:
 				j++;
 				continue;
