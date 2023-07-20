@@ -5,7 +5,7 @@
  * print_all - print a number of values based on a given format
  * @format: the format indicating the data types to print
  * @...: the list of values to print based on the format
- */ 
+ */
 void print_all(const char * const format, ...)
 {
 	int j = 0;
