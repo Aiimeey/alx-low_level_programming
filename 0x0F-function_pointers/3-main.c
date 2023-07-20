@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 		exit(99);
 	}
 
-	if ((operator == '/' || operator == '%') && (atoi(argv[3])) == 0)
+	if ((operator == '/' || operator == '%') && num2 == 0)
 	{
 		printf("Error\n");
 		exit(100);
