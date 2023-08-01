@@ -13,8 +13,8 @@ int pop_listint(listint_t **head)
 	listint_t *temp;
 	int n;
 
-	if (head == NULL)
-		printf("(nil)");
+	if (!head || !(*head))
+		return (0);
 
 	n = (*head)->n;
 	temp = *head;
