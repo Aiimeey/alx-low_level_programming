@@ -24,5 +24,10 @@ int main(int argc, char *argv[])
 		dprintf(STDERR_FILENO, "Error: Can't open file %s\n", argv[1]);
 		exit(98);
 	}
+	if (close(fd) == -1)
+	{
+	dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+	exit(98);
+	}
 	return (1);
 }
