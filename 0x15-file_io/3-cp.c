@@ -1,27 +1,23 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "main.h"
-#include <fcntl.h>
-#include <sys/stat.h>
 /**
  * close_fd - Close file descriptors for both "to_fd" and "from_fd"
  * @to_fd: The file descriptor to close for the destination file
  * @from_fd: The file descriptor to close for the source file
  */
-void close_fd(int from_fd, int to_fd)
+void close_fd(ssize_t from_fd, ssize_t to_fd)
 {
-	int  bt_close, bf_close;
+	ssize_t  bt_close, bf_close;
 
 	bf_close = close(from_fd);
 	if (bf_close == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", from_fd);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %ld\n", from_fd);
 		exit(100);
 	}
 	bt_close = close(to_fd);
 	if (bt_close == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", to_fd);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %ld\n", to_fd);
 		exit(100);
 	}
 }
@@ -35,7 +31,7 @@ void close_fd(int from_fd, int to_fd)
  */
 int main(int argc, char *argv[])
 {
-	int from_fd, to_fd, s_read, s_write;
+	ssize_t from_fd, to_fd, s_read, s_write;
 	char buff[1024];
 
 	umask(0);
@@ -76,3 +72,4 @@ int main(int argc, char *argv[])
 	close_fd(to_fd, from_fd);
 	return (0);
 }
+
