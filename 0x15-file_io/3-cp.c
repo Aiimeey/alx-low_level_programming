@@ -22,29 +22,15 @@ void close_fd(int to_fd, int from_fd)
 }
 /**
  * safe_close - Safely close file descriptors and free memory
- * @buff: The buffer to free
  * @from_fd: The file descriptor to close for the source file
  * @to_fd: The file descriptor to close for the destination file
  */
-void safe_close(char *buff, int from_fd, int to_fd)
+void safe_close(int from_fd, int to_fd)
 {
-	free(buff);
 	close(to_fd);
 	close(from_fd);
 }
-/**
- * buff_check - Check if the buffer is NULL and handle the error
- * @buff: The buffer to check
- * @from_fd: The file descriptor to close for the source file in case of error
- */
-void buff_check(char *buff, int from_fd)
-{
-	if (buff == NULL)
-	{
-		close(from_fd);
-		exit(-1);
-	}
-}
+
 /**
  * main - The main function to copy data from one file to another.
  * @argc: The number of command-line arguments.
@@ -55,9 +41,8 @@ void buff_check(char *buff, int from_fd)
 int main(int argc, char *argv[])
 {
 	int from_fd, to_fd, s_read, s_write;
-	char *buff;
+	char buff[1024];
 
-	umask(0);
 	if (argc != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp from_fd to_fd\n");
@@ -69,29 +54,30 @@ int main(int argc, char *argv[])
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
-	buff = malloc(1024);
-	buff_check(buff, from_fd);
 	to_fd = open(argv[2], O_WRONLY | O_TRUNC | O_CREAT, 0664);
 	if (to_fd < 0)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
 		exit(99);
 	}
-	s_read = read(from_fd, buff, 1024);
-	if (s_read < 0)
+	while ((s_read = read(from_fd, buff, 1024)))
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-		safe_close(buff, to_fd, from_fd);
-		exit(98);
+		if (s_read < 0)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+			safe_close(to_fd, from_fd);
+			exit(98);
+		}
+
+		s_write = write(to_fd, buff, s_read);
+		if (s_write != s_read || s_write < 0)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+			safe_close(to_fd, from_fd);
+			exit(99);
+		}
 	}
-	s_write = write(to_fd, buff, s_read);
-	if (s_write != s_read || s_write < 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-		safe_close(buff, to_fd, from_fd);
-		exit(99);
-	}
-	free(buff);
+
 	close_fd(to_fd, from_fd);
 	return (0);
 }
