@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	umask(0);
 	if (argc != 3)
 	{
-		dprintf(STDERR_FILENO, "Usage: cp from_fd to_fd\n");
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
 	from_fd = open(argv[1], O_RDONLY);
