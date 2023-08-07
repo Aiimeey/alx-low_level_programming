@@ -23,12 +23,7 @@ int create_file(const char *filename, char *text_content)
 	if (fd == -1)
 		return (-1);
 
-	if (text_content == NULL)
-	{
-		close(fd);
-		return (-1);
-	}
-	else if (text_content != NULL)
+	if (text_content)
 	{
 		s_print = dprintf(fd, "%s", text_content);
 
