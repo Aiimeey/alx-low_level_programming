@@ -8,27 +8,22 @@
  * @to_fd: The file descriptor to close for the destination file
  * @from_fd: The file descriptor to close for the source file
  */
-void close_fd(int to_fd, int from_fd)
+void close_fd(int from_fd, int to_fd)
 {
 	int  bt_close, bf_close;
 
-	bt_close = close(to_fd);
 	bf_close = close(from_fd);
-	if (bt_close < 0 || bf_close < 0)
+	if (bf_close == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd FD_VALUE");
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", from_fd);
 		exit(100);
 	}
-}
-/**
- * safe_close - Safely close file descriptors and free memory
- * @from_fd: The file descriptor to close for the source file
- * @to_fd: The file descriptor to close for the destination file
- */
-void safe_close(int from_fd, int to_fd)
-{
-	close(to_fd);
-	close(from_fd);
+	bt_close = close(to_fd);
+	if (bt_close == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", to_fd);
+		exit(100);
+	}
 }
 
 /**
@@ -43,41 +38,41 @@ int main(int argc, char *argv[])
 	int from_fd, to_fd, s_read, s_write;
 	char buff[1024];
 
+	umask(0);
 	if (argc != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp from_fd to_fd\n");
 		exit(97);
 	}
 	from_fd = open(argv[1], O_RDONLY);
-	if (from_fd < 0)
+	if (from_fd == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
 	to_fd = open(argv[2], O_WRONLY | O_TRUNC | O_CREAT, 0664);
-	if (to_fd < 0)
+	if (to_fd == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+		close(from_fd);
 		exit(99);
 	}
 	while ((s_read = read(from_fd, buff, 1024)))
 	{
-		if (s_read < 0)
+		if (s_read == -1)
 		{
 			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-			safe_close(to_fd, from_fd);
+			close_fd(to_fd, from_fd);
 			exit(98);
 		}
-		buff[1024] = '\0';
 		s_write = write(to_fd, buff, s_read);
-		if (s_write != s_read || s_write < 0)
+		if (s_write == -1)
 		{
 			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-			safe_close(to_fd, from_fd);
+			close_fd(to_fd, from_fd);
 			exit(99);
 		}
 	}
-
 	close_fd(to_fd, from_fd);
 	return (0);
 }
