@@ -81,4 +81,3 @@ int main(int argc, char *argv[])
 	close_fd(to_fd, from_fd);
 	return (0);
 }
-
