@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
 	int from_fd, to_fd, s_read, s_write;
 	char *buff;
 
+	umask(0);
 	if (argc != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp from_fd to_fd\n");
@@ -83,7 +84,6 @@ int main(int argc, char *argv[])
 		safe_close(buff, to_fd, from_fd);
 		exit(98);
 	}
-	buff[s_read] = '\0';
 	s_write = write(to_fd, buff, s_read);
 	if (s_write != s_read || s_write < 0)
 	{
