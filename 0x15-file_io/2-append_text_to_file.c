@@ -24,7 +24,7 @@ int append_text_to_file(const char *filename, char *text_content)
 
 	if (text_content)
 	{
-		s_print = dprintf(fd, "%s\n", text_content);
+		s_print = dprintf(fd, "%s", text_content);
 		close(fd);
 
 		if (s_print == -1)
