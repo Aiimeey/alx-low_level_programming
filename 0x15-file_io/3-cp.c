@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 			safe_close(to_fd, from_fd);
 			exit(98);
 		}
-
+		buff[1024] = '\0';
 		s_write = write(to_fd, buff, s_read);
 		if (s_write != s_read || s_write < 0)
 		{
