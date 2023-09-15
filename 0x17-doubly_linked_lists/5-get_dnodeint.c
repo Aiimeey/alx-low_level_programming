@@ -2,7 +2,7 @@
 /**
  * get_dnodeint_at_index - Returns a pointer to the node at a specified index
  * @head: A pointer to the head of the doubly linked list
- * @index: The index of the node to retrieve 
+ * @index: The index of the node to retrieve
  *
  * Return: A pointer to the node at the specified index, or NULL if not found
  */
